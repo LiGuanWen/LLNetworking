@@ -23,8 +23,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/LiGuanWen/LLNetworking.git", :branch => "#{s.version}" }
   s.source_files  = "LLNetworking/**/*.{h,m,mm,a}"
   s.resources = "LLNetworking/**/*.xib"
-  s.prefix_header_file = 'LLNetworking/LLNetworkingPrefixHeader.pch'    #PCH文件
-  s.dependency 'AFNetworking', '~> 2.6.0'
-  s.dependency 'YYKit'
+  # s.prefix_header_file = 'LLNetworking/LLNetworkingPrefixHeader.pch'    #PCH文件
+  s.dependency 'YTKNetwork'
 
 end

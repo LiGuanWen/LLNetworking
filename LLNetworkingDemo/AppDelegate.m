@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "YTKNetworkConfig.h"
 @interface AppDelegate ()
 
 @end
@@ -17,6 +17,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    YTKNetworkConfig *config = [YTKNetworkConfig sharedConfig];
+    config.baseUrl = @"http://oqyot9383.bkt.clouddn.com";
     return YES;
 }
 
