@@ -34,6 +34,7 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
     return self;
 }
 
+
 +(NSMutableDictionary *)defaultConfig
 {
     static dispatch_once_t once;
@@ -41,7 +42,7 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
     dispatch_once(&once, ^{
         //拼接网络请求基本参数 （不变参数）
 //        
-//        dfconfigValue = [[NSMutableDictionary alloc]init];
+        dfconfigValue = [[NSMutableDictionary alloc]init];
 //        //渠道号
 //        [dfconfigValue setObject:@"iOS" forKey:@"ch"];
 //        //    [configValue setObject:@"iOS_s_01" forKey:@"ch"];
@@ -177,22 +178,22 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
 //    }
 //    
 //    
-//    NSMutableArray *configString = [[NSMutableArray alloc]init];
-//    
-//    NSArray *key = [configValue allKeys];
-//    
-//    for (int i = 0; i < key.count; i++) {
-//        
-//        NSString *value = [configValue objectForKey:key[i]];
-//        [configString addObject:[NSString stringWithFormat:@"%@=%@",key[i],[value stringByURLEncode]]];
-//    }
-//    if ([newUrl rangeOfString:@"?"].location != NSNotFound) {
-//        [newUrl appendFormat:@"&%@",[configString componentsJoinedByString:@"&"]];
-//    }
-//    else
-//    {
-//        [newUrl appendFormat:@"?%@",[configString componentsJoinedByString:@"&"]];
-//    }
+    NSMutableArray *configString = [[NSMutableArray alloc]init];
+    
+    NSArray *key = [configValue allKeys];
+    
+    for (int i = 0; i < key.count; i++) {
+        
+        NSString *value = [configValue objectForKey:key[i]];
+        [configString addObject:[NSString stringWithFormat:@"%@=%@",key[i],[value stringByURLEncode]]];
+    }
+    if ([newUrl rangeOfString:@"?"].location != NSNotFound) {
+        [newUrl appendFormat:@"&%@",[configString componentsJoinedByString:@"&"]];
+    }
+    else
+    {
+        [newUrl appendFormat:@"?%@",[configString componentsJoinedByString:@"&"]];
+    }
     NSLog(@"API:%@  必要参数:%@  提交参数为: %@",kLLBaseURL,newUrl,self.params);
     return newUrl;
 }
@@ -255,7 +256,9 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
     {
         case LLHTTPMethodGET:
         {
-            return [[LLAPIClient sharedClient] GET:[entity configurePath] parameters:entity.params ?: @{} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+            return [[LLAPIClient sharedClient] GET:[entity configurePath] parameters:entity.params ?: @{} progress:^(NSProgress * _Nonnull downloadProgress) {
+                
+            }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
             {
                 [LLAPIClient handleResponseObject:responseObject entity:entity completion:completion];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
@@ -266,7 +269,10 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
         
         case LLHTTPMethodPOST:
         {
-            return [[LLAPIClient sharedClient] POST:[entity configurePath] parameters:entity.params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            return [[LLAPIClient sharedClient] POST:[entity configurePath] parameters:entity.params
+            progress:^(NSProgress * _Nonnull downloadProgress) {
+                                               
+            }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 [LLAPIClient handleResponseObject:responseObject entity:entity completion:completion];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 [LLAPIClient handleFailureWithEntity:entity completion:completion failure:failure error:error];
@@ -276,13 +282,9 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
         case LLHTTPMethodPOSTWithMultiMedia:
         {
             [LLAPIClient sharedClient].requestSerializer.timeoutInterval = REQUEST_TIME_OUT * 3;
-            return [[LLAPIClient sharedClient] POST:[entity configurePath] parameters:entity.params ?: @{} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
-            {
-                if (entity.media.medias.count)
-                {
-                    for (NSInteger i = 0; i < entity.media.medias.count; i ++)
-                    {
-                        LLMedia * media = entity.media.medias[i];
+            return [[LLAPIClient sharedClient] POST:[entity configurePath] parameters:entity.params ?: @{} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData){
+                if (entity.media.medias.count){
+                    for (NSInteger i = 0; i < entity.media.medias.count; i ++) {
                         if (entity.media.type == LLMediaTypeImage)
                         {
                             UIImage * image = entity.media.medias[i];
@@ -290,7 +292,10 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
                         }
                     }
                 }
-            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            }
+            progress:^(NSProgress * _Nonnull downloadProgress) {
+                                               
+            }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 [[self class] handleResponseObject:responseObject entity:entity completion:completion];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 [[self class] handleFailureWithEntity:entity completion:completion failure:failure error:error];
@@ -312,7 +317,10 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
     {
         case LLHTTPMethodGET:
         {
-            return [[LLAPIClient sharedClient] GET:[entity configurePath] ?: @"" parameters:entity.params ?: @{} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+            return [[LLAPIClient sharedClient] GET:[entity configurePath] ?: @"" parameters:entity.params ?: @{}
+            progress:^(NSProgress * _Nonnull downloadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
                 [LLAPIClient handleResponseObject:responseObject entity:entity completion:completion warning:warning];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 [LLAPIClient handleFailureWithEntity:entity completion:completion warning:warning failure:failure error:error];
@@ -321,7 +329,10 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
             
         case LLHTTPMethodPOST:
         {
-            return [[LLAPIClient sharedClient] POST:[entity configurePath] ?: @"" parameters:entity.params ?: @{} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+            return [[LLAPIClient sharedClient] POST:[entity configurePath] ?: @"" parameters:entity.params ?: @{}
+           progress:^(NSProgress * _Nonnull downloadProgress) {
+                                               
+           }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
                 [LLAPIClient handleResponseObject:responseObject entity:entity completion:completion warning:warning];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 [LLAPIClient handleFailureWithEntity:entity completion:completion warning:warning failure:failure error:error];
@@ -337,7 +348,6 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
                         {
                             for (NSInteger i = 0; i < entity.media.medias.count; i ++)
                             {
-                                LLMedia * media = entity.media.medias[i];
                                 
                                 if (entity.media.type == LLMediaTypeImage)
                                 {
@@ -355,7 +365,10 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
                                 }
                             }
                         }
-                    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    }
+                   progress:^(NSProgress * _Nonnull downloadProgress) {
+                       
+                   }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                         [LLAPIClient handleResponseObject:responseObject entity:entity completion:completion warning:warning];
                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                         [LLAPIClient handleFailureWithEntity:entity completion:completion warning:warning failure:failure error:error];
@@ -387,12 +400,19 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
         {
             [[LLAPIClient cache] setObject:responseObject forKey:cacheKey];
         }
-        
-        id viewModel = [entity.targetClass modelWithJSON:responseObject];
-        [self networkCodeWithViewModel:result];
-        if (viewModel)
-        {
-            completion(viewModel);
+        if (entity.targetClass) {
+            id viewModel = [entity.targetClass modelWithJSON:responseObject];
+            [self networkCodeWithViewModel:result];
+            if (viewModel)
+            {
+                if (completion) {
+                    completion(viewModel);
+                }
+            }
+        }else{
+            if (completion) {
+                completion(responseObject);
+            }
         }
     }
     else
@@ -401,12 +421,21 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
         {
             id json = [[LLAPIClient cache] objectForKey:cacheKey];
             NSLog(@"JSON from cache : %@", json);
-            id viewModel = [entity.targetClass modelWithJSON:json];
-            completion(viewModel);
+            if (entity.targetClass) {
+                id viewModel = [entity.targetClass modelWithJSON:json];
+                if (completion) {
+                    completion(viewModel);
+                }
+            }else{
+                if (completion) {
+                    completion(json);
+                }
+            }
         }
-        else
-        {
-            completion(nil);
+        else {
+            if (completion) {
+                completion(nil);
+            }
         }
     }
 }
@@ -430,35 +459,45 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
         }
 
         NSString *result = [responseObject objectForKey:RESPONSE_RESULT_KEY];
-        id viewModel = [entity.targetClass modelWithJSON:responseObject];
+        if (entity.targetClass) {
+            id viewModel = [entity.targetClass modelWithJSON:responseObject];
+            if ([result integerValue] == 1) {
+                completion(viewModel);
+            } else{
+                warning(viewModel);
+            }
+        } else {
+            if ([result integerValue] == 1) {
+                completion(responseObject);
+            } else{
+                warning(responseObject);
+            }
+        }
         [self networkCodeWithViewModel:result];
-
-        if ([result integerValue] == 1) {
-            completion(viewModel);
-        }
-        else
-        {
-            warning(viewModel);
-        }
-    }
-    else
-    {
+    }else{
         if (entity.cacheEnable && [[LLAPIClient cache] containsObjectForKey:cacheKey])
         {
             id json = [[LLAPIClient cache] objectForKey:cacheKey];
             NSLog(@"JSON from cache : %@", json);
-            id viewModel = [entity.targetClass modelWithJSON:json];
             NSString *result = [json objectForKey:RESPONSE_RESULT_KEY];
-            if ([result integerValue] == 1) {
-                completion(viewModel);
+            if (entity.targetClass) {
+                id viewModel = [entity.targetClass modelWithJSON:json];
+                if ([result integerValue] == 1) {
+                    completion(viewModel);
+                }
+                else
+                {
+                    warning(viewModel);
+                }
+            } else {
+                if ([result integerValue] == 1) {
+                    completion(json);
+                }
+                else{
+                    warning(json);
+                }
             }
-            else
-            {
-                warning(viewModel);
-            }
-        }
-        else
-        {
+        }else{
             completion(nil);
         }
     }
@@ -479,13 +518,14 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
     {
         id json = [[LLAPIClient cache] objectForKey:cacheKey];
         NSLog(@"JSON from cache : %@", json);
-        id viewModel = [entity.targetClass modelWithJSON:json];
-        completion(viewModel);
-    }
-    else
-    {
-        if (failure)
-        {
+        if (entity.targetClass) {
+            id viewModel = [entity.targetClass modelWithJSON:json];
+            completion(viewModel);
+        } else {
+            completion(json);
+        }
+    }else{
+        if (failure){
             failure(error);
         }
     }
@@ -507,20 +547,23 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
     {
         id json = [[LLAPIClient cache] objectForKey:cacheKey];
         NSLog(@"JSON from cache : %@", json);
-        id viewModel = [entity.targetClass modelWithJSON:json];
         NSString *result = [json objectForKey:RESPONSE_RESULT_KEY];
-        if ([result integerValue] == 1) {
-            completion(viewModel);
+        if (entity.targetClass) {
+            id viewModel = [entity.targetClass modelWithJSON:json];
+            if ([result integerValue] == 1) {
+                completion(viewModel);
+            } else{
+                warning(viewModel);
+            }
+        } else {
+            if ([result integerValue] == 1) {
+                completion(json);
+            } else{
+                warning(json);
+            }
         }
-        else
-        {
-            warning(viewModel);
-        }
-    }
-    else
-    {
-        if (failure)
-        {
+    }else{
+        if (failure){
             failure(error);
         }
     }

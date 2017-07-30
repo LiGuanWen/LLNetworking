@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,7 +20,60 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnt-do-jQl">
+                                <rect key="frame" x="100" y="101" width="175" height="55"/>
+                                <color key="backgroundColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="fKA-x3-4OR"/>
+                                </constraints>
+                                <state key="normal" title="GET请求">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getRequestAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9UC-wT-wbH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6iT-Uh-ecM">
+                                <rect key="frame" x="100" y="193" width="175" height="55"/>
+                                <color key="backgroundColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="7JK-f7-ZtE"/>
+                                </constraints>
+                                <state key="normal" title="POST请求">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="postRequestAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MJf-hG-GOg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p6g-xA-ypN">
+                                <rect key="frame" x="100" y="292" width="175" height="55"/>
+                                <color key="backgroundColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="w4A-yN-JmJ"/>
+                                </constraints>
+                                <state key="normal" title="HEAD请求">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="headRequestAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Iao-Hl-s4e"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="p6g-xA-ypN" firstAttribute="width" secondItem="6iT-Uh-ecM" secondAttribute="width" id="2d1-mh-XCQ"/>
+                            <constraint firstItem="cnt-do-jQl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7fi-tO-qlJ"/>
+                            <constraint firstItem="6iT-Uh-ecM" firstAttribute="top" secondItem="cnt-do-jQl" secondAttribute="bottom" constant="37" id="JHd-I6-Wcb"/>
+                            <constraint firstItem="cnt-do-jQl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="100" id="PJ6-Gg-8zh"/>
+                            <constraint firstAttribute="trailing" secondItem="cnt-do-jQl" secondAttribute="trailing" constant="100" id="Ucc-hh-fNx"/>
+                            <constraint firstItem="p6g-xA-ypN" firstAttribute="centerX" secondItem="6iT-Uh-ecM" secondAttribute="centerX" id="YON-R8-DUt"/>
+                            <constraint firstItem="cnt-do-jQl" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="81" id="bYZ-n2-WWj"/>
+                            <constraint firstItem="6iT-Uh-ecM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eIA-tz-JNb"/>
+                            <constraint firstItem="6iT-Uh-ecM" firstAttribute="width" secondItem="cnt-do-jQl" secondAttribute="width" id="noU-4h-yNd"/>
+                            <constraint firstItem="p6g-xA-ypN" firstAttribute="top" secondItem="6iT-Uh-ecM" secondAttribute="bottom" constant="44" id="uLb-Gi-Vhu"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

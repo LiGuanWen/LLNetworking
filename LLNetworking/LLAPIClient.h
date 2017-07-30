@@ -7,29 +7,40 @@
 //
 
 #import <AFNetworking/AFNetworking.h>
-
+//请求api 头部
 static NSString *kLLBaseURL = nil;
+
+
+//请求成功的code 字段   //默认 result   //如果需要区分waring的话
+static NSString *kLL_RESPONSE_RESULT_KEY = @"result";
+//请求成功的code 字段   默认 1 
+static NSInteger kLL_RESPONSE_RESULT_VALUE = 1;
+
 
 typedef void(^LLHTTPCompletionBlock)(id viewModel);  //请求成功，返回result为1的结果
 typedef void(^LLHTTPFailureBlock)(NSError * error);  //请求失败，放回error
 typedef void(^LLHTTPWarningBlock)(id viewModel);     //请求成功，返回result为0的结果
 
-typedef NS_ENUM(NSInteger, LLHTTPMethod)
-{
+/**
+ 请求类型
+ */
+typedef NS_ENUM(NSInteger, LLHTTPMethod){
     LLHTTPMethodGET = 0,
     LLHTTPMethodPOST,
     LLHTTPMethodPOSTWithMultiMedia,
 };
 
-typedef NS_ENUM(NSInteger, LLMediaType)
-{
+
+/**
+ 媒体类型
+ */
+typedef NS_ENUM(NSInteger, LLMediaType){
     LLMediaTypeImage = 0,
     LLMediaTypeAudio,
     LLMediaTypeVideo,
 };
 
 @interface LLMedia : NSObject
-
 @property (assign, nonatomic) LLMediaType type;
 @property (copy, nonatomic) NSArray * medias;
 @property (copy, nonatomic) NSString * name;//单个key对应一张或多张图片
@@ -37,7 +48,8 @@ typedef NS_ENUM(NSInteger, LLMediaType)
 @property (nonatomic, copy) NSString * fileName;
 
 @end
- 
+
+
 @interface LLHTTPEntity : NSObject
 
 @property (assign, nonatomic) LLHTTPMethod method;
@@ -59,7 +71,7 @@ typedef NS_ENUM(NSInteger, LLMediaType)
 
 @interface LLAPIClient : AFHTTPSessionManager
 
-
+#pragma mark  配置基本参数
 /**
  设置请求url
  */

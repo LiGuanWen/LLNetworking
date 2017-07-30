@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "YTKNetworkConfig.h"
+#import "LLAPIClient.h"
 @interface AppDelegate ()
 
 @end
@@ -19,7 +20,10 @@
     // Override point for customization after application launch.
     
     YTKNetworkConfig *config = [YTKNetworkConfig sharedConfig];
-    config.baseUrl = @"http://oqyot9383.bkt.clouddn.com";
+    config.debugLogEnabled = YES;
+    config.baseUrl = @"http://api.autoplusone.com";
+    
+    [LLAPIClient setLLBaseUrl:@"http://api.autoplusone.com"];
     return YES;
 }
 
