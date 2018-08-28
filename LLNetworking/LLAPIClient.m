@@ -453,9 +453,6 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
  */
 + (void)networkCodeWithViewModel:(NSString *)resultCode{
     NSInteger errcode = [resultCode integerValue];
-    if (errcode == 2 ) {  //判断是否需要弹出输入验证码提示框
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kHEPErrorCodeISTwoHandle" object:nil userInfo:nil];
-    }
 }
     
 @end

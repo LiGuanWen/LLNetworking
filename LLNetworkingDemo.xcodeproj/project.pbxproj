@@ -235,8 +235,8 @@
 				TargetAttributes = {
 					FDCC2CF51E9545E5008B3AEE = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = DDP4VPD895;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = Y688PQN5Q4;
+						ProvisioningStyle = Manual;
 					};
 					FDCC2D111E9545E6008B3AEE = {
 						CreatedOnToolsVersion = 8.3;
@@ -480,11 +480,14 @@
 			baseConfigurationReference = 29CD301609329E9A5AACFDBC /* Pods-LLNetworkingDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = DDP4VPD895;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = Y688PQN5Q4;
 				INFOPLIST_FILE = LLNetworkingDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.liguanwen.LLNetworkingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f1784eb6-18bf-48b7-8c22-086e5a16e68e";
+				PROVISIONING_PROFILE_SPECIFIER = "iOS Wildcard App Development";
 			};
 			name = Debug;
 		};
@@ -493,11 +496,13 @@
 			baseConfigurationReference = FCF159700212480B3424E1A9 /* Pods-LLNetworkingDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = DDP4VPD895;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = LLNetworkingDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.liguanwen.LLNetworkingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -570,6 +575,7 @@
 				FDCC2D281E9545E6008B3AEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FDCC2D291E9545E6008B3AEE /* Build configuration list for PBXNativeTarget "LLNetworkingDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -578,6 +584,7 @@
 				FDCC2D2B1E9545E6008B3AEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FDCC2D2C1E9545E6008B3AEE /* Build configuration list for PBXNativeTarget "LLNetworkingDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -586,6 +593,7 @@
 				FDCC2D2E1E9545E6008B3AEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
