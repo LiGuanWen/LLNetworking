@@ -41,63 +41,8 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
     static NSMutableDictionary *dfconfigValue;
     dispatch_once(&once, ^{
         //拼接网络请求基本参数 （不变参数）
-//        
         dfconfigValue = [[NSMutableDictionary alloc]init];
-//        //渠道号
-//        [dfconfigValue setObject:@"iOS" forKey:@"ch"];
-//        //    [configValue setObject:@"iOS_s_01" forKey:@"ch"];
-//        //    [configValue setObject:@"iOS_Dev" forKey:@"ch"];
-//        //api版本号
-//        [dfconfigValue setObject:@"21" forKey:@"api"];
-//        
-//        //app版本号
-//        NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-//        if (appVersion)
-//        {
-//            [dfconfigValue setObject:appVersion forKey:@"ver"];
-//        }
-//        //appBuild
-//        NSString *appBuild = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-//        if (appBuild) {
-//            [dfconfigValue setObject:appBuild forKey:@"build"];
-//        }
-//        //设备信息
-//        NSString * strModel  = [LLUitl iphoneType];
-//        if (strModel) {
-//            [dfconfigValue setObject:strModel forKey:@"model"];
-//        }
-//        //系统版本
-//        NSString *sv = [NSString stringWithFormat:@"%@ %@",[UIDevice currentDevice].systemName,[UIDevice currentDevice].systemVersion];
-//        if (sv) {
-//            [dfconfigValue setObject:sv forKey:@"sv"];
-//        }
-//        
-//        //设备名称
-//        if ([UIDevice currentDevice].name) {
-//            [dfconfigValue setObject:[UIDevice currentDevice].name forKey:@"mn"];
-//        }
-//
-//        
-//        Class cls = NSClassFromString(@"UMANUtil");
-//        NSString *deviceIDFA = nil;
-//        SEL deviceIDFaSelector = @selector(idfa);
-//        if(cls && [cls respondsToSelector:deviceIDFaSelector]){
-//            deviceIDFA = [cls performSelector:deviceIDFaSelector];
-//        }
-//        
-//        if (deviceIDFA && (![deviceIDFA hasPrefix:@"0000"]) && (![deviceIDFA isEqualToString:@""])) {
-//            [dfconfigValue setObject:deviceIDFA forKey:@"imei"];
-//            [dfconfigValue setObject:@"0" forKey:@"isopenudid"];
-//        }else if ([deviceIDFA hasPrefix:@"0000"] || [deviceIDFA isEqualToString:@""])
-//        {
-//            NSString *deviceIDFA = nil;
-//            SEL deviceIDFaSelector = @selector(openUDIDString);
-//            if(cls && [cls respondsToSelector:deviceIDFaSelector]){
-//                deviceIDFA = [cls performSelector:deviceIDFaSelector];
-//            }
-//            [dfconfigValue setObject:deviceIDFA forKey:@"imei"];
-//            [dfconfigValue setObject:@"1" forKey:@"isopenudid"];
-//        }
+
     });
     return dfconfigValue;
 }
@@ -107,77 +52,8 @@ static NSString * const kLLHTTPCacheKey = @"LLHTTPCacheKey";
     NSMutableString *newUrl = [NSMutableString stringWithString:_path];
 
     NSMutableDictionary *configValue = [[NSMutableDictionary alloc]initWithDictionary:[LLHTTPEntity defaultConfig]];
-  
-    //拼接网络请求参数 （会变化的  和需要加密的）
-//    //经纬度
-//    NSString *longt = NSStringFromFloat(CURRENT_BMAP_LONG);
-//    if (longt)
-//    {
-//        [configValue setObject:longt forKey:@"long"];
-//    }
-//    NSString *lat = NSStringFromFloat(CURRENT_BMAP_LAT);
-//    if (lat)
-//    {
-//        [configValue setObject:lat forKey:@"lat"];
-//
-//    }
-//    //地区ID
-//    NSString *areaId = NSStringFromInt(CURRENT_CITY_ID);
-//    if (areaId)
-//    {
-//        [configValue setObject:areaId forKey:@"area_id"];
-//    }
-//    //用户Uid
-//    NSString *currentId = [LLUserManager sharedInstance].userId;
-//    if (currentId)
-//    {
-//        [configValue setObject:currentId forKey:@"user_id"];
-//    }
-//    //用户token
-//    NSString *currentToken = [LLUserManager sharedInstance].token;
-//    if (currentToken)
-//    {
-//        [configValue setObject:currentToken forKey:@"token"];
-//    }
-//    NSString *t = [LLUitl unixTimestamp];
-//    //时间戳
-//    [configValue setObject:t forKey:@"nonce"];
-//
-//    
-//    NSMutableArray *array = [[NSMutableArray alloc]initWithObjects:HePaiPayKey,HePaiImKey,HePaiQWKey,HePaiContactsKey,HePaiBaseKey, nil];
-//    NSString *str = [array componentsJoinedByString:@"/"];
-//    
-//    NSMutableString *tt = [[NSMutableString alloc]initWithCapacity:t.length];
-//    
-//    for (int i = t.length-1 ; i >= 0 ; i--) {
-//        [tt appendFormat:@"%c", [t characterAtIndex:i]];
-//    }
-//    int ttt = (arc4random() % 100001) + 899999;
-//    
-//    NSString *tttt = [NSString stringWithFormat:@"%d%@",ttt,tt];
-//    
-//    NSString *hpid = [[NSUserDefaults standardUserDefaults] objectForKey:@"HePai_hpid"];
-//    if (hpid && hpid.length > 1) {
-//        [configValue setObject:hpid forKey:@"hpid"];
-//    }
-//    
-//    NSString *as = [LLRSAUtil encryptString:[NSString stringWithFormat:@"%@:%@:%@",tttt,configValue[@"imei"],configValue[@"build"]] publicKey:[array componentsJoinedByString:@"/"]];
-//    if (as &&as.length >0) {
-//        [configValue setObject:as forKey:@"sa"];
-//    }
-//    
-//    //融云token
-//    NSString *rctk = [LLUserManager sharedInstance].rongcloudToken;
-//    if (rctk && rctk.length > 0) {
-//        [configValue setObject:rctk forKey:@"rctk"];
-//    }
-//    //网易token
-//    NSString *netk = [LLUserManager sharedInstance].neteaseToken;
-//    if (netk && netk.length > 0) {
-//        [configValue setObject:netk forKey:@"netk"];
-//    }
-//    
-//    
+ 
+
     NSMutableArray *configString = [[NSMutableArray alloc]init];
     
     NSArray *key = [configValue allKeys];
